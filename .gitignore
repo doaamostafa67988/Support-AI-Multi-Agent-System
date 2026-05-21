@@ -1,0 +1,51 @@
+# ==========================================
+# 🐍 Python & Backend (FastAPI / LangGraph)
+# ==========================================
+# Virtual Environment
+.venv/
+venv/
+ENV/
+env/
+
+# Python cache and bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# Local Environment Variables (CRITICAL: Never leak your API Keys)
+.env
+.env.local
+.env.*.local
+
+# Local Database (ChromaDB Vector Storage)
+backend/chroma_db/
+chroma_db/
+*.db
+*.sqlite3
+
+# Logs
+*.log
+
+# ==========================================
+# ⚛️ Frontend (React / Next.js)
+# ==========================================
+# Next.js build output
+.next/
+out/
+build/
+
+# Dependency directories
+node_modules/
+jspm_packages/
+web_modules/
+
+# IDEs and System files
+.DS_Store
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
