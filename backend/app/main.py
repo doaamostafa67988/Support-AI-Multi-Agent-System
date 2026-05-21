@@ -74,4 +74,4 @@ def health_detailed():
         "status": "healthy",
         "chromadb": kb_status,
     }
-# HF Trigger Sync Comment
+# HF Trigger Sync Fix
