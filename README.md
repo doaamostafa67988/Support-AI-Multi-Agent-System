@@ -6,16 +6,13 @@ A production-grade, stateful AI customer support platform orchestrated by **Lang
 
 ---
 
-## Demo
 
-> **Live walkthrough:**
-> [![Watch Demo](https://img.shields.io/badge/Watch-Demo%20Video-red?logo=youtube)](./demo/demo.mp4)
 
-| Chat Interface | Escalation Flow | Action Handling |
-|---|---|---|
-| ![Chat screenshot](./demo/chat.png) | ![Escalation screenshot](./demo/escalation.png) | ![Action screenshot](./demo/action.png) |
+## Chatbot demo
+<img width="960" height="401" alt="Chatbot" src="https://github.com/user-attachments/assets/daeb4a14-04ca-469f-8f4a-ec533b2d4ff4" />
+ 
 
-> Place your screenshots in `demo/` and update the paths above.
+
 
 ---
 
