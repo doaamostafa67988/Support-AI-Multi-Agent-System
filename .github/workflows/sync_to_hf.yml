@@ -12,27 +12,26 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
-      - name: Sync Backend to Hugging Face
+      - name: Push backend directory to Hugging Face Space
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: |
-          # 1. Install standard deployment tools
-          sudo apt-get update && sudo apt-get install -y git-filter-repo
-
-          # 2. Isolate ONLY the backend folder content to be the root of the upload
-          git filter-repo --path backend
-
-          # 3. Move files out of the 'backend' subfolder to the root level for Docker to read properly
-          mv backend/* . 2>/dev/null || true
-          rm -rf backend
-
-          # 4. Configure authentication using lowercase username matching your Space URL
+          # 1. Configure Git Identity inside the runner environment
           git config --global user.email "bot@github.com"
           git config --global user.name "doaamostafa"
-
-          # 5. Force push the clean, isolated backend straight into Hugging Face
-          git remote add hf https://doaamostafa:$HF_TOKEN@huggingface.co/spaces/doaamostafa/support-ai-backend
-          git push hf main --force
+          
+          # 2. Clone the Hugging Face Space repository into a temporary folder
+          git clone https://doaamostafa:$HF_TOKEN@huggingface.co/spaces/doaamostafa/support-ai-backend hf_space
+          
+          # 3. Clean existing old files in the Space to prevent conflicts (except the .git folder)
+          find hf_space -maxdepth 1 ! -name 'hf_space' ! -name '.git' -exec rm -rf {} +
+          
+          # 4. Copy fresh contents of your local backend directory directly into the space folder
+          cp -r backend/* hf_space/
+          
+          # 5. Commit and push the changes directly to Hugging Face main branch
+          cd hf_space
+          git add .
+          git diff-index --quiet HEAD || git commit -m "Automated backend update from GitHub Actions"
+          git push origin main
