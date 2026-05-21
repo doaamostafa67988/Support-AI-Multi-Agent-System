@@ -4,7 +4,7 @@ on:
   push:
     branches: [main]
     paths:
-      - 'backend/**' # Only triggers when files inside the backend folder change
+      - 'backend/**'
 
 jobs:
   deploy:
@@ -15,16 +15,24 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Push backend subtree to Hugging Face
+      - name: Sync Backend to Hugging Face
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: |
-          # Configure Git credentials using your secure token
+          # 1. Install standard deployment tools
+          sudo apt-get update && sudo apt-get install -y git-filter-repo
+
+          # 2. Isolate ONLY the backend folder content to be the root of the upload
+          git filter-repo --path backend
+
+          # 3. Move files out of the 'backend' subfolder to the root level for Docker to read properly
+          mv backend/* . 2>/dev/null || true
+          rm -rf backend
+
+          # 4. Configure authentication using lowercase username matching your Space URL
           git config --global user.email "bot@github.com"
-          git config --global user.name "GitHub Action Bot"
-          
-          # Add the Hugging Face Space repository as a remote origin
-          git remote add hf https://Doaamostafa:$HF_TOKEN@huggingface.co/spaces/Doaamostafa/support-ai-backend
-          
-          # Force push only the contents of the 'backend' subdirectory directly into Hugging Face main branch
-          git subtree push --prefix backend hf main --force
+          git config --global user.name "doaamostafa"
+
+          # 5. Force push the clean, isolated backend straight into Hugging Face
+          git remote add hf https://doaamostafa:$HF_TOKEN@huggingface.co/spaces/doaamostafa/support-ai-backend
+          git push hf main --force
