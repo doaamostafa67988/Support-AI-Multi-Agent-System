@@ -13,20 +13,9 @@ type ConnState = "connecting" | "connected" | "reconnecting" | "failed"
 
 const MAX_RECONNECT = 5
 
-// ── Backend URL resolution ──────────────────────────────────────────────────
-// Priority order:
-//   1. NEXT_PUBLIC_BACKEND_WS_URL env var  (set this in Vercel dashboard)
-//   2. Auto-detect: same host, port 8000, ws://
-// For production: set NEXT_PUBLIC_BACKEND_WS_URL=wss://your-backend-domain.com
-// in Vercel → Settings → Environment Variables
-function getWsUrl(): string {
-  if (process.env.NEXT_PUBLIC_BACKEND_WS_URL) {
-    return process.env.NEXT_PUBLIC_BACKEND_WS_URL.replace(/\/$/, "") + "/ws/chat"
-  }
-  const protocol = window.location.protocol === "https:" ? "wss:" : "ws:"
-  const host = window.location.hostname
-  return `${protocol}//${host}:8000/ws/chat`
-}
+// Hardcoded WSS URL — NEXT_PUBLIC_ vars are baked at build time and unreliable
+// when set after the first deploy. Change this string if your backend URL changes.
+const BACKEND_WS_URL = "wss://doaamostafa-support-ai.hf.space/ws/chat"
 
 export default function Home() {
   const [messages, setMessages] = useState<Message[]>([
@@ -62,10 +51,10 @@ export default function Home() {
 
     let ws: WebSocket
     try {
-      ws = new WebSocket(getWsUrl())
+      ws = new WebSocket(BACKEND_WS_URL)
     } catch {
       setConnState("failed")
-      addMessage("error", "Cannot connect to backend. Check your NEXT_PUBLIC_BACKEND_WS_URL setting.")
+      addMessage("error", "Cannot connect to backend.")
       return
     }
 
@@ -195,11 +184,6 @@ export default function Home() {
       </div>
 
       <div className="px-4 pb-6 pt-3 border-t border-white/10 bg-[#15151c]">
-        {connState === "failed" && (
-          <p className="text-center text-xs text-red-400 mb-2">
-            ⚠ Backend not reachable. Set <code className="bg-white/10 px-1 rounded">NEXT_PUBLIC_BACKEND_WS_URL</code> in Vercel environment variables.
-          </p>
-        )}
         <div className="flex gap-3 max-w-3xl mx-auto">
           <input
             value={input}
