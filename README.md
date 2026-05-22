@@ -1,3 +1,4 @@
+
 # ⚡ Support AI — Multi-Agent Customer Support System
 
 A production-grade, stateful AI customer support platform orchestrated by **LangGraph**, powered by **Groq/Llama 3.3-70B**, with **ChromaDB** RAG retrieval and a real-time **Next.js** chat interface.
@@ -9,8 +10,7 @@ A production-grade, stateful AI customer support platform orchestrated by **Lang
 
 
 ## Chatbot demo
-<img width="960" height="401" alt="Chatbot" src="https://github.com/user-attachments/assets/daeb4a14-04ca-469f-8f4a-ec533b2d4ff4" />
- 
+<img width="960" height="401" alt="Chatbot" src="https://github.com/user-attachments/assets/eac89a0b-82e8-459b-9734-09d4eec0227c" />
 
 
 
