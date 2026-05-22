@@ -44,7 +44,6 @@ export default function Home() {
 
   const connect = useCallback(() => {
 
-  // Prevent duplicate websocket connections
   if (
     socketRef.current &&
     (
@@ -55,18 +54,14 @@ export default function Home() {
     return
   }
 
-  if (socketRef.current) {
-    socketRef.current.onclose = null
-    socketRef.current.close()
-  }
-
   let ws: WebSocket
 
   try {
-    console.log("Connecting to:", BACKEND_WS_URL)
+    console.log("FINAL WS URL =", BACKEND_WS_URL)
 
     ws = new WebSocket(BACKEND_WS_URL)
-  } catch {
+  } catch (err) {
+    console.error(err)
     setConnState("failed")
     addMessage("error", "Cannot connect to backend.")
     return
