@@ -43,21 +43,36 @@ export default function Home() {
   }, [])
 
   const connect = useCallback(() => {
-    if (socketRef.current) {
-      socketRef.current.onclose = null
-      socketRef.current.close()
-    }
 
-    let ws: WebSocket
-    try {
-      ws = new WebSocket(BACKEND_WS_URL)
-    } catch {
-      setConnState("failed")
-      addMessage("error", "Cannot connect to backend.")
-      return
-    }
+  // Prevent duplicate websocket connections
+  if (
+    socketRef.current &&
+    (
+      socketRef.current.readyState === WebSocket.OPEN ||
+      socketRef.current.readyState === WebSocket.CONNECTING
+    )
+  ) {
+    return
+  }
 
-    socketRef.current = ws
+  if (socketRef.current) {
+    socketRef.current.onclose = null
+    socketRef.current.close()
+  }
+
+  let ws: WebSocket
+
+  try {
+    console.log("Connecting to:", BACKEND_WS_URL)
+
+    ws = new WebSocket(BACKEND_WS_URL)
+  } catch {
+    setConnState("failed")
+    addMessage("error", "Cannot connect to backend.")
+    return
+  }
+
+  socketRef.current = ws
 
     ws.onopen = () => {
       setConnState("connected")
