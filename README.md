@@ -1,7 +1,8 @@
 
 # ⚡ Support AI — Multi-Agent Customer Support System
 
-A production-grade, stateful AI customer support platform orchestrated by **LangGraph**, powered by **Groq/Llama 3.3-70B**, with **ChromaDB** RAG retrieval and a real-time **Next.js** chat interface.
+A production-grade, stateful AI customer support platform orchestrated by **LangGraph**, powered by **Groq/Llama 3.3-70B**, with **ChromaDB** RAG retrieval and a real-time **Next.js** chat interface.You can access the live version of the application here:
+[**Launch Application**](https://customer-support-ai-vert-nu.vercel.app/)
 
 ![Architecture](./architecture.svg)
 
@@ -9,7 +10,10 @@ A production-grade, stateful AI customer support platform orchestrated by **Lang
 
 
 
-## Chatbot demo
+## [Live Demo](https://customer-support-ai-vert-nu.vercel.app/)
+[![Website](https://img.shields.io/badge/Live-Demo-blue)](https://customer-support-ai-vert-nu.vercel.app/)
+
+
 <img width="960" height="401" alt="Chatbot" src="https://github.com/user-attachments/assets/eac89a0b-82e8-459b-9734-09d4eec0227c" />
 
 
