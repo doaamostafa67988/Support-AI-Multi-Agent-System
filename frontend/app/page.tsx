@@ -15,7 +15,7 @@ const MAX_RECONNECT = 5
 
 // Hardcoded WSS URL — NEXT_PUBLIC_ vars are baked at build time and unreliable
 // when set after the first deploy. Change this string if your backend URL changes.
-const BACKEND_WS_URL = process.env.NEXT_PUBLIC_BACKEND || "wss://doaamostafa-support-ai.hf.space/ws/chat";
+const BACKEND_WS_URL = process.env.NEXT_PUBLIC_WS_URL || "wss://doaamostafa-support-ai.hf.space/ws/chat";
 export default function Home() {
   const [messages, setMessages] = useState<Message[]>([
     {
